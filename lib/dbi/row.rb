@@ -235,7 +235,7 @@ module DBI
                 row.instance_variable_set :@column_names,  @column_names
                 # this is the only one we actually dup...
                 row.instance_variable_set :@arr,           arr = @arr.dup
-                row.instance_variable_set :@_dc_obj,       arr
+                row.instance_variable_set :@delegate_dc_obj,       arr
                 row
             end
         end
