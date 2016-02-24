@@ -35,20 +35,22 @@ module DBI
         # a TypeError is raised.
         #
         def initialize(hash=nil)
-            @hash = hash.dup rescue nil
             @hash ||= Hash.new
 
-            # coerce all strings to symbols
-            @hash.each_key do |x|
-                if x.kind_of? String
-                    sym = x.to_sym
-                    if @hash.has_key? sym
+            @hash = hash.inject({}) do |h, (key, val)|
+                if String === key
+                    new_k = key.to_sym
+                    if h.has_key? new_k
                         raise ::TypeError, 
-                            "#{self.class.name} may construct from a hash keyed with strings or symbols, but not both" 
+                            "#{self.class.name} may construct from a hash keyed with strings or symbols, but not both"
                     end
-                    @hash[sym] = @hash[x]
-                    @hash.delete(x)
+                    
+                    h[new_k] = val
+                else
+                    h[key] = val
                 end
+                
+                h
             end
 
             super(@hash)
