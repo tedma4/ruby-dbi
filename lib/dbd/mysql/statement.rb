@@ -20,7 +20,7 @@ module DBI::DBD::Mysql
         # binding.
         #
         def bind_param(param, value, attribs)
-            raise InterfaceError, "only ? parameters supported" unless param.is_a? Fixnum
+            raise InterfaceError, "only ? parameters supported" unless param.is_a? Integer
             @params[param-1] = value 
         end
 
