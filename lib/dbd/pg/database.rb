@@ -96,7 +96,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
         else
             return false
         end
-    rescue PGError
+    rescue PG::Error
         return false
     ensure
         answer.clear if answer
@@ -426,7 +426,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
     def __blob_import(file)
         start_transaction unless @in_transaction
         @connection.lo_import(file)
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message) 
     end
 
@@ -436,7 +436,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
     def __blob_export(oid, file)
         start_transaction unless @in_transaction
         @connection.lo_export(oid.to_i, file)
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message) 
     end
 
@@ -446,7 +446,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
     def __blob_create(mode=PG::Connection::INV_READ)
         start_transaction unless @in_transaction
         @connection.lo_creat(mode)
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message) 
     end
 
@@ -456,7 +456,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
     def __blob_open(oid, mode=PG::Connection::INV_READ)
         start_transaction unless @in_transaction
         @connection.lo_open(oid.to_i, mode)
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message) 
     end
 
@@ -466,7 +466,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
     def __blob_unlink(oid)
         start_transaction unless @in_transaction
         @connection.lo_unlink(oid.to_i)
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message) 
     end
 
@@ -501,7 +501,7 @@ class DBI::DBD::Pg::Database < DBI::BaseDatabase
         # up before release.
         # @connection.lo_close(blob)
         return res
-    rescue PGError => err
+    rescue PG::Error => err
         raise DBI::DatabaseError.new(err.message)
     end
 
