@@ -17,8 +17,8 @@ class TestPostgresByteA < DBDConfig.testbase(:postgresql)
     def skip_underlying_driver 
         str = generate_random_string
 
-        encoded = PGconn.escape_bytea(str.dup)
-        decoded = PGconn.unescape_bytea(encoded)
+        encoded = PG::Connection.escape_bytea(str.dup)
+        decoded = PG::Connection.unescape_bytea(encoded)
 
         assert_equal str, decoded
     end

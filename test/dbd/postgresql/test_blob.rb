@@ -9,7 +9,7 @@ class TestPostgresBlob < DBDConfig.testbase(:postgresql)
         assert_equal 1, @dbh.do("INSERT INTO blob_test (name, data) VALUES (?,?)", "test", DBI::Binary.new(DATA))
 
         # test with blob_create directly
-        blob = @dbh.func(:blob_create, PGconn::INV_WRITE)
+        blob = @dbh.func(:blob_create, PG::Connection::INV_WRITE)
         assert blob
         assert @dbh.func(:blob_write, blob, DATA)
         assert_equal 1, @dbh.do("INSERT INTO blob_test (name, data) VALUES (?,?)", "test (2)", blob)
